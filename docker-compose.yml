@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: iwealth-better-db
+    environment:
+      POSTGRES_USER: iwealth
+      POSTGRES_PASSWORD: iwealth
+      POSTGRES_DB: iwealth_better
+    ports:
+      - "5433:5432"
+    volumes:
+      - iwealth_better_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U iwealth -d iwealth_better"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  iwealth_better_pgdata:
